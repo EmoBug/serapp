@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layout ::site-head">
-<title>Klaser monet</title>
+<title>Lista serów</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" media="all" href="../../css/klaser.css" th:href="@{/css/klaser.css}" />
 </head>
@@ -13,11 +13,11 @@
              
   <div>
  
-    <form action="#" th:action="@{/monety}" th:object="${moneta}" method="post">
+    <form action="#" th:action="@{/sery}" th:object="${ser}" method="post">
 
       <fieldset>
 
-        <legend th:text="#{klaser.moneta.dane}">Starter Data</legend>
+        <legend th:text="#{klaser.ser.dane}">Starter Data</legend>
 
         <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
           <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
@@ -28,17 +28,12 @@
           </label> <input type="text" th:field="*{numerKatalogowy}" th:errorclass="fieldError" />
         </div>
         <div>
-          <label for="nominal"> <span th:text="#{klaser.nominal}">nominal</span>
-          </label> <input type="text" th:field="*{nominal}" th:errorclass="fieldError" />
-          <span th:if="${#fields.hasErrors('nominal')}" th:errors="*{nominal}">Incorrect nominal</span>
-        </div>
-        <div>
           <label for="opis"> <span th:text="#{klaser.opis}">opis</span>
           </label> <input type="text" th:field="*{opis}" th:errorclass="fieldError" />
         </div>
         <div>
-          <label for="waluta"> <span th:text="#{klaser.waluta}">waluta</span>
-          </label> <input type="text" th:field="*{waluta}" th:errorclass="fieldError" />
+          <label for="nazwa"> <span th:text="#{klaser.nazwa}">nazwa</span>
+          </label> <input type="text" th:field="*{nazwa}" th:errorclass="fieldError" />
         </div>
         <div>
           <label for="cenaNabycia"> <span th:text="#{klaser.cenaNabycia}">cenaNabycia</span>

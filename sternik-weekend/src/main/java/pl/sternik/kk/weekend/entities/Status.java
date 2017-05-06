@@ -3,12 +3,12 @@ package pl.sternik.kk.weekend.entities;
 
 public enum Status {
     
-    NOWA("Nowa"), 
-    DO_SPRZEDANIA("Do sprzedania"),
-    DUBLET("Dublet");
+    NOWY("Swierzy"), 
+    DOJRZEWAJACY("Dojrzewajacy"),
+    PRZETERMINOWANY("Przetermonowany");
     
     
-    public static final Status[] ALL = { NOWA, DO_SPRZEDANIA, DUBLET };
+    public static final Status[] ALL = { NOWY, DOJRZEWAJACY, PRZETERMINOWANY };
     
     
     private final String name;

@@ -6,16 +6,16 @@
 <title th:text="#{title.application}">Klaser</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" media="all" href="../../css/klaser.css" th:href="@{/css/klaser.css}" />
-<link rel="icon" href="../../imgages/coins.ico" th:href="@{/images/coins.ico}" />
+<link rel="icon" href="../../imgages/cheese.ico" th:href="@{/images/cheese.ico}" />
 </head>
 
 <body>
 
   <header th:fragment="site-header">
-    <a href="index.html" th:href="@{/}"><img src="../../images/klaser.jpg" th:src="@{/images/klaser.jpg}"/> </a> 
-    <a href="klaser.html" th:href="@{/monety}">Wszystkie monety</a>
-    <a href="tosell.html" th:href="@{/tosell}">Monety do sprzedania</a>
-    <a href="moneta.html" th:href="@{/monety/create}">Dodaj monetę</a>
+    <a href="index.html" th:href="@{/}"><img src="../../images/cheese.jpg" th:src="@{/images/cheese.jpg}"/> </a> 
+    <a href="klaser.html" th:href="@{/sery}">Wszystkie Sery</a>
+    <a href="tosell.html" th:href="@{/tosell}">Sery do sprzedania</a>
+    <a href="ser.html" th:href="@{/sery/create}">Dodaj ser</a>
    <!--  Zalogowany: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>  
     <form th:action="@{/wyloguj}" method="POST" style="display: inline">
         <input type=submit class="link" value="Wyloguj"/>
@@ -29,15 +29,15 @@
   </header>
 
   <div>
-    <h2 th:text="#{title.list}" style="display: inline;">Klaser monet</h2>    
-    <img src="../../images/klaser.jpg" alt="Klaser logo" title="Klaser logo" th:src="@{/images/klaser.jpg}"
+    <h2 th:text="#{title.list}" style="display: inline;">Lista serów</h2>    
+    <img src="../../images/cheese.jpg" alt="Klaser logo" title="Klaser logo" th:src="@{/images/cheese.jpg}"
       th:alt-title="#{title.application}" style="float: right;" /> 
     <p> A tu jakis kontent, raczje sie nie pokaże </p>
   </div>
 
   <footer th:fragment="site-footer"> 
-  Krzysztof Kozioł <a href="https://github.com/kkoziol/sternik-weeken"> Source code</a>
-  &copy; Sternik Klaser System, 2017 
+  Daniel Geppart <a href="https://github.com/EmoBug/sternik-weekend"> Source code</a>
+  &copy; Sternik Baza serów, 2017 
   </footer>
 
 </body>

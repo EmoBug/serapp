@@ -7,20 +7,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 //@Entity
 //@XmlRootElement
-public class Moneta {
+public class Ser {
 
 //    @NotNull
 //    @Id
     private Long numerKatalogowy;
 	
 //	@NotNull
-	private Long nominal;
-	
-	//@Size(min=2, max=30, message = "{Size.moneta.opis}")
-//	@Size(min=2, max=30, message = "Opis should be in the range [{min}...{max}]")
 	private String opis;
 //	@NotEmpty
-	private String waluta;
+	private String nazwa;
 //	@NotNull
 	private BigDecimal cenaNabycia;
 //	@NotNull
@@ -32,14 +28,13 @@ public class Moneta {
 
 	
 	
-	public static Moneta produceMoneta(Long numerKatalogowy, String krajPochodzenia, Long nominal, String waluta, String opis,
+	public static Ser produceSer(Long numerKatalogowy, String krajPochodzenia, String nazwa, String opis,
 			Date dataNabycia, BigDecimal cenaNabycia, Status status) {
-		Moneta m = new Moneta();
+		Ser m = new Ser();
 		m.numerKatalogowy = numerKatalogowy;
 		m.krajPochodzenia = krajPochodzenia;
-		m.nominal = nominal;
 		m.opis = opis;
-		m.waluta = waluta;
+		m.nazwa = nazwa;
 		m.cenaNabycia = cenaNabycia;
 		m.dataNabycia = dataNabycia;
 		m.status = status;
@@ -50,16 +45,13 @@ public class Moneta {
 		return numerKatalogowy;
 	}
 
-	public Long getNominal() {
-		return nominal;
-	}
 
 	public String getOpis() {
 		return opis;
 	}
 
-	public String getWaluta() {
-		return waluta;
+	public String getNazwa() {
+		return nazwa;
 	}
 
 	public BigDecimal getCenaNabycia() {
@@ -82,16 +74,13 @@ public class Moneta {
 		this.numerKatalogowy = numerKatalogowy;
 	}
 
-	public void setNominal(Long nominal) {
-		this.nominal = nominal;
-	}
 
 	public void setOpis(String opis) {
 		this.opis = opis;
 	}
 
-	public void setWaluta(String waluta) {
-		this.waluta = waluta;
+	public void setNazwa(String nazwa) {
+		this.nazwa = nazwa;
 	}
 
 	public void setCenaNabycia(BigDecimal cenaNabycia) {
@@ -118,10 +107,9 @@ public class Moneta {
 		result = prime * result + ((cenaNabycia == null) ? 0 : cenaNabycia.hashCode());
 		result = prime * result + ((dataNabycia == null) ? 0 : dataNabycia.hashCode());
 		result = prime * result + ((krajPochodzenia == null) ? 0 : krajPochodzenia.hashCode());
-		result = prime * result + ((nominal == null) ? 0 : nominal.hashCode());
 		result = prime * result + ((numerKatalogowy == null) ? 0 : numerKatalogowy.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((waluta == null) ? 0 : waluta.hashCode());
+		result = prime * result + ((nazwa == null) ? 0 : nazwa.hashCode());
 		return result;
 	}
 
@@ -133,7 +121,7 @@ public class Moneta {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Moneta other = (Moneta) obj;
+		Ser other = (Ser) obj;
 		if (opis == null) {
 			if (other.opis != null)
 				return false;
@@ -154,11 +142,6 @@ public class Moneta {
 				return false;
 		} else if (!krajPochodzenia.equals(other.krajPochodzenia))
 			return false;
-		if (nominal == null) {
-			if (other.nominal != null)
-				return false;
-		} else if (!nominal.equals(other.nominal))
-			return false;
 		if (numerKatalogowy == null) {
 			if (other.numerKatalogowy != null)
 				return false;
@@ -169,18 +152,18 @@ public class Moneta {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
-		if (waluta == null) {
-			if (other.waluta != null)
+		if (nazwa == null) {
+			if (other.nazwa != null)
 				return false;
-		} else if (!waluta.equals(other.waluta))
+		} else if (!nazwa.equals(other.nazwa))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Moneta [numerKatalogowy=" + numerKatalogowy + ", nominal=" + nominal + ", Opis=" + opis + ", waluta="
-				+ waluta + ", cenaNabycia=" + cenaNabycia + ", dataNabycia=" + dataNabycia + ", krajPochodzenia="
+		return "Ser [numerKatalogowy=" + numerKatalogowy + ", Opis=" + opis + ", nazwa="
+				+ nazwa + ", cenaNabycia=" + cenaNabycia + ", dataNabycia=" + dataNabycia + ", krajPochodzenia="
 				+ krajPochodzenia + ", status=" + status + "]";
 	}
 

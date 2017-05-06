@@ -8,93 +8,90 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import pl.sternik.kk.weekend.entities.Moneta;
+import pl.sternik.kk.weekend.entities.Ser;
 import pl.sternik.kk.weekend.entities.Status;
 
 
 @Repository
 @Qualifier("tablica")
-public class ProstaBazaDanych implements MonetyRepository {
+public class ProstaBazaDanych implements SeryRepository {
 
-    private Moneta[] baza;
+    private Ser[] baza;
 
     public ProstaBazaDanych() {
-        baza = new Moneta[15];
-        Moneta m = new Moneta();
+        baza = new Ser[15];
+        Ser m = new Ser();
         m.setNumerKatalogowy(0L);
-        m.setKrajPochodzenia("Polska");
-        m.setNominal(1L);
-        m.setWaluta("zł");
-        m.setOpis("Ładna nowiutka złotóweczka");
+        m.setKrajPochodzenia("Holandia");
+        m.setNazwa("Gouda");
+        m.setOpis("Delikatny ser żółty w plastrach");
         m.setDataNabycia(new Date());
-        m.setCenaNabycia(new BigDecimal("1.2"));
-        m.setStatus(Status.NOWA);
+        m.setCenaNabycia(new BigDecimal("19.5"));
+        m.setStatus(Status.NOWY);
         baza[0] = m;
-        m = new Moneta();
+        m = new Ser();
         m.setNumerKatalogowy(2L);
-        m.setKrajPochodzenia("Polska");
-        m.setNominal(2L);
-        m.setWaluta("zł");
-        m.setOpis("Ładna nowiutka dwu złotóweczka");
+        m.setKrajPochodzenia("Normandia");
+        m.setNazwa("Camembert");
+        m.setOpis("Miękki ser podpuszczkowy");
         m.setDataNabycia(new Date());
-        m.setCenaNabycia(new BigDecimal("2.2"));
-        m.setStatus(Status.DO_SPRZEDANIA);
+        m.setCenaNabycia(new BigDecimal("28.90"));
+        m.setStatus(Status.DOJRZEWAJACY);
         baza[2] = m;
 
     }
 
     public ProstaBazaDanych(int rozmiarBazy) {
-        baza = new Moneta[rozmiarBazy];
+        baza = new Ser[rozmiarBazy];
     }
 
     @Override
-    public Moneta create(Moneta moneta) throws MonetaAlreadyExistsException {
-        if (moneta.getNumerKatalogowy() != null && baza[moneta.getNumerKatalogowy().intValue()] != null) {
-            if (moneta.getNumerKatalogowy().equals(baza[moneta.getNumerKatalogowy().intValue()].getNumerKatalogowy())) {
-                throw new MonetaAlreadyExistsException("Już jest moneta o takim numerze.");
+    public Ser create(Ser ser) throws SerAlreadyExistsException {
+        if (ser.getNumerKatalogowy() != null && baza[ser.getNumerKatalogowy().intValue()] != null) {
+            if (ser.getNumerKatalogowy().equals(baza[ser.getNumerKatalogowy().intValue()].getNumerKatalogowy())) {
+                throw new SerAlreadyExistsException("W basie jest już ser o takim numerze");
             }
         }
         for (int i = 0; i < baza.length; i++) {
             if (baza[i] == null) {
-                baza[i] = moneta;
-                moneta.setNumerKatalogowy((long) i);
-                return moneta;
+                baza[i] = ser;
+                ser.setNumerKatalogowy((long) i);
+                return ser;
             }
         }
         throw new RuntimeException("Brak miejsca w tablicy");
     }
 
     @Override
-    public void deleteById(Long id) throws NoSuchMonetaException {
+    public void deleteById(Long id) throws NoSuchSerException {
         int numerKatalogowy = id.intValue();
         if (!sprawdzPoprawnoscNumeruKatalogowego(numerKatalogowy)) {
-            throw new NoSuchMonetaException("Nie poprawny numer katologowy");
+            throw new NoSuchSerException("Niepoprawny numer katologowy");
         }
-        // tu troche zle ;)
         baza[numerKatalogowy] = null;
     }
 
     @Override
-    public Moneta update(Moneta moneta) throws NoSuchMonetaException {
-        int numerKatalogowy = moneta.getNumerKatalogowy().intValue();
+    public Ser update(Ser ser) throws NoSuchSerException {
+        int numerKatalogowy = ser.getNumerKatalogowy().intValue();
         if (!sprawdzPoprawnoscNumeruKatalogowego(numerKatalogowy)) {
-            throw new NoSuchMonetaException("Nie poprawny numer katologowy");
+            throw new NoSuchSerException("Niepoprawny numer katologowy");
         }
 
-        Moneta m = baza[moneta.getNumerKatalogowy().intValue()];
-        if (m == null) {
-            throw new NoSuchMonetaException("Brak takiej monety.");
+        Ser s = baza[ser.getNumerKatalogowy().intValue()];
+        if (s == null) {
+            throw new NoSuchSerException("Brak takiego sera.");
         } else {
-            baza[moneta.getNumerKatalogowy().intValue()] = moneta;
+            baza[ser.getNumerKatalogowy().intValue()] = ser;
         }
-        return moneta;
+        return ser;
     }
 
     @Override
-    public Moneta readById(Long numerKatalogowy) throws NoSuchMonetaException {
+    public Ser readById(Long numerKatalogowy) throws NoSuchSerException {
         int id = numerKatalogowy.intValue();
         if (!sprawdzPoprawnoscNumeruKatalogowego(id) || czyWolne(id)) {
-            throw new NoSuchMonetaException();
+            throw new NoSuchSerException();
         }
         return baza[id];
     }
@@ -106,8 +103,8 @@ public class ProstaBazaDanych implements MonetyRepository {
     }
 
     @Override
-    public List<Moneta> findAll() {
-        List<Moneta> tmp = new ArrayList<>();
+    public List<Ser> findAll() {
+        List<Ser> tmp = new ArrayList<>();
         for (int i = 0; i < baza.length; i++) {
             if (baza[i] != null)
                 tmp.add(baza[i]);

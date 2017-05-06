@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pl.sternik.kk.weekend.entities.Moneta;
+import pl.sternik.kk.weekend.entities.Ser;
 import pl.sternik.kk.weekend.entities.Status;
-import pl.sternik.kk.weekend.repositories.MonetaAlreadyExistsException;
-import pl.sternik.kk.weekend.repositories.MonetyRepository;
-import pl.sternik.kk.weekend.repositories.NoSuchMonetaException;
+import pl.sternik.kk.weekend.repositories.SerAlreadyExistsException;
+import pl.sternik.kk.weekend.repositories.SeryRepository;
+import pl.sternik.kk.weekend.repositories.NoSuchSerException;
 
 
 
@@ -31,7 +31,7 @@ public class WprawkiController {
 
     @Autowired
     @Qualifier("tablica")
-    MonetyRepository baza;
+    SeryRepository baza;
     
     @RequestMapping(path = "/wprawki", method = RequestMethod.GET)
     public String wprawki(ModelMap model) {
@@ -62,25 +62,24 @@ public class WprawkiController {
     
     @GetMapping(value = "/wprawki/monety/{id}/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Moneta> viewAsJson(@PathVariable("id") Long id, final ModelMap model) {
-        Moneta m;
+    public ResponseEntity<Ser> viewAsJson(@PathVariable("id") Long id, final ModelMap model) {
+        Ser s;
         try {
-            m = baza.readById(id);
-            return new ResponseEntity<Moneta>(m, HttpStatus.OK);
+            s = baza.readById(id);
+            return new ResponseEntity<Ser>(s, HttpStatus.OK);
             
-        } catch (NoSuchMonetaException e) {
+        } catch (NoSuchSerException e) {
             System.out.println(e.getClass().getName());
-            m = new Moneta();
-            m.setNumerKatalogowy(id);
-            m.setKrajPochodzenia("Polska");
-            m.setStatus(Status.NOWA);
-            m.setNominal(10L);
+            s = new Ser();
+            s.setNumerKatalogowy(id);
+            s.setKrajPochodzenia("Polska");
+            s.setStatus(Status.NOWY);
             try {
-                baza.create(m);
-            } catch (MonetaAlreadyExistsException e1) {
+                baza.create(s);
+            } catch (SerAlreadyExistsException e1) {
                 System.out.println(e1.getClass().getName());
             }
-            return new ResponseEntity<Moneta>(m, HttpStatus.CREATED);
+            return new ResponseEntity<Ser>(s, HttpStatus.CREATED);
         }
     }
 

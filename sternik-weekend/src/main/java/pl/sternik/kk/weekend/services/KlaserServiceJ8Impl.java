@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import pl.sternik.kk.weekend.entities.Moneta;
+import pl.sternik.kk.weekend.entities.Ser;
 import pl.sternik.kk.weekend.entities.Status;
-import pl.sternik.kk.weekend.repositories.MonetaAlreadyExistsException;
-import pl.sternik.kk.weekend.repositories.MonetyRepository;
-import pl.sternik.kk.weekend.repositories.NoSuchMonetaException;
+import pl.sternik.kk.weekend.repositories.SerAlreadyExistsException;
+import pl.sternik.kk.weekend.repositories.SeryRepository;
+import pl.sternik.kk.weekend.repositories.NoSuchSerException;
 
 
 @Service
@@ -23,36 +23,36 @@ public class KlaserServiceJ8Impl implements KlaserService {
 
     @Autowired
     @Qualifier("lista")
-    private MonetyRepository monety;
+    private SeryRepository sery;
 
     @Override
-    public List<Moneta> findAll() {
-        return monety.findAll();
+    public List<Ser> findAll() {
+        return sery.findAll();
     }
 
     @Override
-    public List<Moneta> findLatest3() {
-        return monety.findAll().stream().sorted((a, b) -> b.getDataNabycia().compareTo(a.getDataNabycia())).limit(5)
+    public List<Ser> findLatest3() {
+        return sery.findAll().stream().sorted((a, b) -> b.getDataNabycia().compareTo(a.getDataNabycia())).limit(5)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Moneta> findById(Long id) {
+    public Optional<Ser> findById(Long id) {
         try {
-            return Optional.of(monety.readById(id));
-        } catch (NoSuchMonetaException e) {
+            return Optional.of(sery.readById(id));
+        } catch (NoSuchSerException e) {
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<Moneta> create(Moneta moneta) {
+    public Optional<Ser> create(Ser ser) {
         try {
-            return Optional.of(monety.create(moneta));
-        } catch (MonetaAlreadyExistsException e) {
+            return Optional.of(sery.create(ser));
+        } catch (SerAlreadyExistsException e) {
             try {
-                return Optional.of(monety.readById(moneta.getNumerKatalogowy()));
-            } catch (NoSuchMonetaException e1) {
+                return Optional.of(sery.readById(ser.getNumerKatalogowy()));
+            } catch (NoSuchSerException e1) {
                 return Optional.empty();
             }
         }
@@ -60,10 +60,10 @@ public class KlaserServiceJ8Impl implements KlaserService {
     }
 
     @Override
-    public Optional<Moneta> edit(Moneta moneta) {
+    public Optional<Ser> edit(Ser ser) {
         try {
-            return Optional.of(monety.update(moneta));
-        } catch (NoSuchMonetaException e) {
+            return Optional.of(sery.update(ser));
+        } catch (NoSuchSerException e) {
             return Optional.empty();
         }
     }
@@ -71,16 +71,16 @@ public class KlaserServiceJ8Impl implements KlaserService {
     @Override
     public Optional<Boolean> deleteById(Long id) {
         try {
-            monety.deleteById(id);
+            sery.deleteById(id);
             return Optional.of(Boolean.TRUE);
-        } catch (NoSuchMonetaException e) {
+        } catch (NoSuchSerException e) {
             return Optional.of(Boolean.FALSE);
         }
     }
 
     @Override
-    public List<Moneta> findAllToSell() {
-        return monety.findAll().stream().filter(p -> Objects.equals(p.getStatus(), Status.DO_SPRZEDANIA))
+    public List<Ser> findAllToSell() {
+        return sery.findAll().stream().filter(p -> Objects.equals(p.getStatus(), Status.PRZETERMINOWANY))
                 .collect(Collectors.toList());
     }
 }
